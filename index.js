@@ -79,7 +79,7 @@ class ITMPWsLink extends EventEmitter {
           reject(new Error('500 send error'))
         }
       } else {
-        reject(new Error('500 link is not ready'))
+        reject(new Error('500 link is not ready!'))
       }
     })
   }
