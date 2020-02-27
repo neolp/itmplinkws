@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const EventEmitter = require('events')
 const cbor = require('cbor-sync')
 const WebSocket = require('ws')
@@ -20,10 +21,10 @@ class ITMPWsLink extends EventEmitter {
     var that = this
     that.ready = false
     if (this.ws) {
-      this.ws.removeAllListeners('error')
-      this.ws.removeAllListeners('open')
-      this.ws.removeAllListeners('close')
-      this.ws.removeAllListeners('message')
+      // this.ws.removeAllListeners('error')
+      // this.ws.removeAllListeners('open')
+      // this.ws.removeAllListeners('close')
+      // this.ws.removeAllListeners('message')
       this.ws.close()
     }
     try {
@@ -37,11 +38,12 @@ class ITMPWsLink extends EventEmitter {
     }
 
     this.ws.on('error', (err) => {
-      //console.log('ITMPWsLink Error: ', err)
+      console.log('ITMPWsLink Error: ', err)
       //that.emit('error', err)
     })
 
     this.ws.on('open', () => { // open logic
+      console.log('ITMPWsLink opened ')
       that.ready = true // port opened flag
       this.reconnectCount = 0
       that.emit('connect')
@@ -54,6 +56,11 @@ class ITMPWsLink extends EventEmitter {
       if (this.autoReconnect && !(this.reconnectCount > this.reconnectMaxCount)) {
         this.reconnectTimer = setTimeout(that.connect.bind(that), 3000) //that.settings.reconnectTimeout
       }
+      this.ws.removeAllListeners('error')
+      this.ws.removeAllListeners('open')
+      this.ws.removeAllListeners('close')
+      this.ws.removeAllListeners('message')
+      this.ws = null
     })
 
     this.ws.on('message', (message) => {
@@ -89,17 +96,12 @@ class ITMPWsLink extends EventEmitter {
     this.close()
   }
   close() {
+    console.log('ITMPWsLink closed manually')
     this.ready = false
     if (this.ws) {
-      this.ws.close()
-      let ws = this.ws
-      this.ws = null
-      setTimeout(() => {
-        ws.removeAllListeners('error')
-        ws.removeAllListeners('open')
-        ws.removeAllListeners('close')
-        ws.removeAllListeners('message')
-      }, 1000)
+      //this.ws.close()
+      this.ws.terminate()
+      // TODO connection will be infinitely open (no 'close' event) when remote end in dubug pause (or some else)
     }
   }
 }
