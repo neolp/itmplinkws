@@ -1,6 +1,6 @@
 {
   "name": "itmplinkws",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "itmplinkws js implementation",
   "main": "index.js",
   "scripts": {
@@ -17,7 +17,8 @@
   "author": "Alexey Tsigulin",
   "license": "MIT",
   "dependencies": {
-    "cbor-sync": "^1.0.3"
+    "cbor-sync": "^1.0.3",
+    "ws": "^7.2.3"
   },
   "bugs": {
     "url": "https://github.com/neolp/itmplinkwsjs/issues"
