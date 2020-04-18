@@ -1,6 +1,6 @@
 {
   "name": "itmplinkws",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "itmplinkws js implementation",
   "main": "index.js",
   "scripts": {

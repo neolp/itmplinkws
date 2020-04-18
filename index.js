@@ -38,19 +38,19 @@ class ITMPWsLink extends EventEmitter {
     }
 
     this.ws.on('error', (err) => {
-      console.log('ITMPWsLink Error: ', err)
+      //console.log('ITMPWsLink Error: ', err)
       //that.emit('error', err)
     })
 
     this.ws.on('open', () => { // open logic
-      console.log('ITMPWsLink opened ')
+      //console.log('ITMPWsLink opened ')
       that.ready = true // port opened flag
       this.reconnectCount = 0
       that.emit('connect')
     })
 
     this.ws.on('close', (code, reason) => {
-      console.log('ITMPWsLink closed ', code, reason)
+      //console.log('ITMPWsLink closed ', code, reason)
       that.ready = false
       that.emit('disconnect', code, reason)
       if (this.autoReconnect && !(this.reconnectCount > this.reconnectMaxCount)) {
